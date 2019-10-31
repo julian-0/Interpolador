@@ -1,4 +1,5 @@
 from tkinter import *
+from sympy import *
 class MetodoFINTER:
     dominio = [1,3,5]
     imagen = [2,5,6]
@@ -10,27 +11,12 @@ class Lagrange(MetodoFINTER):
     def obtenerL(self,nroDeL):
         auxDominio = self.dominio[:]
         auxImagen = self.imagen[:]
+        #(x-3)*(x-5)
+
         auxDominio.pop(nroDeL)
         auxImagen.pop(nroDeL)
-        print(auxDominio)
-        print(auxImagen)
 
-
-raiz=Tk()
-raiz.title("TP matematica superior")
-raiz.resizable(1,1)
-#raiz.geometry("640x480")
-raiz.config(bg="light green")
-
-miFrame=Frame()
-miFrame.pack()
-miFrame.config(bg="red")
-miFrame.config(width="650",height="350")
-
-miFrame.config(relief="groove",bd=35)
-
+vf, d, a, vi, t = S('vf d a vi t'.split())
 algo = Lagrange()
-algo.printear()
-algo.obtenerL(1)
-
-raiz.mainloop()
+otraCosa = Eq(vf+2,0)
+print (solve(otraCosa))
