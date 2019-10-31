@@ -1,20 +1,5 @@
 from tkinter import *
-class MetodoFINTER:
-    dominio = [1,3,5]
-    imagen = [2,5,6]
-    def printear(self):
-        print(self.dominio)
-        print(self.imagen)
-
-class Lagrange(MetodoFINTER):
-    def obtenerL(self,nroDeL):
-        auxDominio = self.dominio[:]
-        auxImagen = self.imagen[:]
-        auxDominio.pop(nroDeL)
-        auxImagen.pop(nroDeL)
-        print(auxDominio)
-        print(auxImagen)
-
+from Metodos import *
 
 raiz=Tk()
 raiz.title("TP matematica superior")
