@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 from Metodos import *
 
 """
@@ -59,8 +60,8 @@ raiz.mainloop()
 ##############################################3
 class AppFinter():
 
-    def agregarPunto(self):
-        self.years.set(self.ordenada.get())
+    ordenadas=[]
+    imagenes=[]
 
     def __init__(self):
         raiz=Tk()
@@ -81,32 +82,35 @@ class AppFinter():
         Label(miFrame,text = "Ingrese los puntos").grid(row=2,column=0)
 
 
-        # Creating a Frame Container
+        # Frame Container
         frame = LabelFrame(miFrame, text = 'Ingrese un punto')
         frame.grid(row = 3, column = 0, columnspan = 3, pady = 20)
 
-        # Name Input
-
+        # Ordenada Input
         self.years = StringVar()
 
         Label(frame, text = 'Ordenada: ').grid(row = 4, column = 0)
         self.ordenada = Entry(frame)
-        #self.name.focus()
         self.ordenada.grid(row = 4, column = 1)
 
-        # Price Input
+        # Imagen Input
         Label(frame, text = 'Imagen: ').grid(row = 5, column = 0)
         self.imagen = Entry(frame)
         self.imagen.grid(row = 5, column = 1)
 
-        # Button Add Product
-        boton = Button(frame, text = "Agregar", command = self.agregarPunto).grid(row = 6, column = 0)
+        # Boton agregar
+        boton = Button(frame, text = "Agregar", command = self.agregarPunto,bg="blue",activebackground="cyan").grid(row = 6, column = 0,columnspan = 3)
 
-        Label(frame, text = 'Su ordenada: ').grid(row = 7, column = 0)
-        Label(frame, text = 'Su imagen: ').grid(row = 8, column = 0)
+        # Tabla
+        self.tabla = ttk.Treeview(miFrame,height = 10, columns = 2)
+        self.tabla.grid(row = 9, column = 0)
+        self.tabla.heading('#0', text = 'Ordenada', anchor = CENTER)
+        self.tabla.heading('#1', text = 'Imagen', anchor = CENTER)
 
-        lo = Label(frame,textvariable=self.years).grid(row = 7, column = 1)
-        li = Label(frame).grid(row = 8, column = 1)
+    def agregarPunto(self):
+        self.ordenadas.append(self.ordenada.get())
+        self.imagenes.append(self.imagen.get())
+        self.tabla.insert('', 'end', text = self.ordenada.get(), values = self.imagen.get())
 
 
 if __name__ == '__main__':
