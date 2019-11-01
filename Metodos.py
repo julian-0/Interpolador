@@ -22,6 +22,8 @@ class MetodoFINTER:
         pass
     def mostrarPasos(self):
         pass
+    def obtenerValorPara(self,K):
+        pass
 
 
 class Lagrange(MetodoFINTER):
@@ -54,13 +56,19 @@ class Lagrange(MetodoFINTER):
         print("Polinomio de grado ",degree(polinomio)," obtenido: ")
         print(polinomio.as_poly())
 
+    def obtenerValorPara(self,K):#Por ahora printea pero podria devolver un String
+        polinomio = self.obtenerPolinomioInterpolante()
+        print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
+
+#Son solo pruebas, para testear mas rapido.
 algo = Lagrange()
+algo.obtenerValorPara(7.5)
+"""
 poli = algo.obtenerPolinomioInterpolante()
 print("El polinomio obtenido es: ", poli)
 print ("La imagen aproximada en 7.5 es: ",poli.subs(x, 7.5))
 algo.mostrarPasos();
 
-"""
 otraCosa = (x + y)*(y - 2.2*z)
 otraCosa.as_poly() #Hace la distributiva
 print (otraCosa.as_poly())
