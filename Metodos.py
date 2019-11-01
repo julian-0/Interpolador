@@ -59,6 +59,7 @@ class Lagrange(MetodoFINTER):
     def obtenerValorPara(self,K):#Por ahora printea pero podria devolver un String
         polinomio = self.obtenerPolinomioInterpolante()
         print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
+        return polinomio.subs(x,K) #Para el test.Se puede sacar
 
 #Son solo pruebas, para testear mas rapido.
 algo = Lagrange()
