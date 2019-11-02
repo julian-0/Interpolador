@@ -1,58 +1,67 @@
 from tkinter import ttk
+import tkinter as tk
 from Metodos import *
 
-class AppFinter():
 
-    ordenadas=[]
-    imagenes=[]
+class AppFinter():
+    ordenadas = []
+    imagenes = []
 
     def __init__(self):
-        raiz=Tk()
-        self.raiz=raiz
+        raiz = Tk()
+        self.raiz = raiz
         raiz.title("TP matematica superior")
-        raiz.resizable(1,1)
+        raiz.resizable(1, 1)
         raiz.config(bg="light green")
 
-
-        miFrame=Frame()
+        miFrame = Frame()
         miFrame.pack()
         miFrame.config(bg="dodger blue")
-        miFrame.config(width="650",height="350")
+        miFrame.config(width="650", height="350")
 
-        miFrame.config(relief="groove",bd=35)
+        miFrame.config(relief="groove", bd=35)
 
-        Label(miFrame,text = "Bienvenido!",bg="dodger blue").grid(row=1,column=0)
-        Label(miFrame,text = "Ingrese los puntos").grid(row=2,column=0)
-
+        Label(miFrame, text="Bienvenido!", bg="dodger blue").grid(row=1, column=0)
 
         # Frame Container
-        frame = LabelFrame(miFrame, text = 'Ingrese un punto')
-        frame.grid(row = 3, column = 0, columnspan = 3, pady = 20)
+        frame = LabelFrame(miFrame, text='Ingrese puntos')
+        frame.grid(row=3, column=0, pady=5)
 
         # Ordenada Input
-        self.years = StringVar()
-
-        Label(frame, text = 'Ordenada: ').grid(row = 4, column = 0)
+        Label(frame, text='Ordenada: ').grid(row=4, column=0)
         self.ordenada = Entry(frame)
-        self.ordenada.grid(row = 4, column = 1)
+        self.ordenada.grid(row=4, column=1)
 
         # Imagen Input
-        Label(frame, text = 'Imagen: ').grid(row = 5, column = 0)
+        Label(frame, text='Imagen: ').grid(row=5, column=0)
         self.imagen = Entry(frame)
-        self.imagen.grid(row = 5, column = 1)
+        self.imagen.grid(row=5, column=1)
 
         # Boton agregar
-        boton = Button(frame, text = "Agregar", command = self.agregarPunto,bg="turquoise",activebackground="cyan").grid(row = 6, column = 0,columnspan = 3)
+        boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="turquoise", activebackground="cyan")
+        boton.grid(row=6, column=0, columnspan=2)
 
         # Mensaje resultado
-        self.mensaje = Label(frame,text = '', fg = 'black')
-        self.mensaje.grid(row = 8, column = 0, columnspan = 2)
+        self.mensaje = Label(frame, text='', fg='black')
+        self.mensaje.grid(row=8, column=0, columnspan=2)
 
         # Tabla
-        self.tabla = ttk.Treeview(miFrame,height = 10, columns = 2)
-        self.tabla.grid(row = 9, column = 0)
-        self.tabla.heading('#0', text = 'Ordenada', anchor = CENTER)
-        self.tabla.heading('#1', text = 'Imagen', anchor = CENTER)
+        self.tabla = ttk.Treeview(miFrame, height=10, columns=2)
+        self.tabla.grid(row=9, column=0)
+        self.tabla.heading('#0', text='Ordenada', anchor=tk.CENTER)
+        self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
+
+        # Seleccion de metodo
+        frameMetodo = LabelFrame(miFrame, text='Seleccione un metodo')
+        frameMetodo.grid(row=10, column=0, pady=5)
+        self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24)
+        self.combo.pack()
+        self.combo["values"] = ["Lagrange", "Newton Gregory progresivo", "Newton Gregory regresivo"]
+        self.combo.set("Lagrange")
+
+        # Boton calcular
+        botonCalcular = Button(miFrame, text="Calcular", bg="firebrick3", activebackground="darkOrchid4")
+        botonCalcular.grid(row=11, column=0)
 
     def validar(self):
         if not self.completos():
@@ -74,12 +83,13 @@ class AppFinter():
         if self.validar():
             self.ordenadas.append(self.ordenada.get())
             self.imagenes.append(self.imagen.get())
-            self.tabla.insert('', 'end', text = self.ordenada.get(), values = self.imagen.get())
+            self.tabla.insert('', 'end', text=self.ordenada.get(), values=self.imagen.get())
         self.limpiarInputs()
 
     def limpiarInputs(self):
         self.ordenada.delete(0, 'end')
         self.imagen.delete(0, 'end')
+
 
 if __name__ == '__main__':
     app = AppFinter()
