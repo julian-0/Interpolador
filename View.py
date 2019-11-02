@@ -17,16 +17,16 @@ class AppFinter(Tk):
         self.resizable(1, 1)
         self.config(bg="light green")
 
-        container = Frame()
-        container.pack(side="top", fill="both", expand=True)
-        container.config(bg=COLOR_PRINCIPAL)
-        container.config(width="650", height="350")
-        container.config(relief="groove", bd=35)
+        self.container = Frame()
+        self.container.pack(side="top", fill="both", expand=True)
+        self.container.config(bg=COLOR_PRINCIPAL)
+        self.container.config(width="650", height="350")
+        self.container.config(relief="groove", bd=35)
 
         self.frames = {}
 
         for Vista in (VistaInicial, VistaPolinomio):
-            frame = Vista(container, self)
+            frame = Vista(self.container, self)
             self.frames[Vista] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
@@ -40,6 +40,7 @@ class AppFinter(Tk):
 class VistaInicial(tk.Frame):
     ordenadas = []
     imagenes = []
+    metodoElegido = ""
 
     def __init__(self, padre, controller):
         tk.Frame.__init__(self, padre)
@@ -83,7 +84,7 @@ class VistaInicial(tk.Frame):
         self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24, font=FONT_PRINCIPAL)
         self.combo.pack()
         self.combo["values"] = ["Lagrange", "Newton Gregory progresivo", "Newton Gregory regresivo"]
-        self.combo.set("Lagrange")
+        self.combo.current(1)
 
         # Boton calcular
         botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4",
@@ -118,6 +119,7 @@ class VistaInicial(tk.Frame):
         self.imagen.delete(0, 'end')
 
     def calcularPolinomio(self):
+        self.metodoElegido = self.combo.get()
         frame = self.controlador.frames[VistaPolinomio]
         frame.cargarPolinomio(self)
         self.controlador.mostrarFrame(VistaPolinomio)
@@ -129,23 +131,27 @@ class VistaPolinomio(tk.Frame):
         tk.Frame.__init__(self, padre)
         Label(self, text="Vista polinomio", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
-        boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
+        self.boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
                        command=lambda: controlador.mostrarFrame(VistaInicial))
-        boton.grid(row=2, column=0)
+        self.boton.grid(row=2, column=0)
+
+        self.lMetodo = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_TITULO)
+        self.lMetodo.grid(row=3, column=0)
+
+        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=0)
+        Label(self, text="Imagenes", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=1)
 
     def cargarPolinomio(self, padre):
         self.padre = padre
-
-        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=0)
+        self.lMetodo['text']=padre.metodoElegido
         i = 0
         for o in padre.ordenadas:
-            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4 + i, column=0)
+            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=5 + i, column=0)
             i = i + 1
 
-        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=1)
         j = 0
         for img in padre.imagenes:
-            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4 + j, column=1)
+            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=5 + j, column=1)
             j = j + 1
 
 
