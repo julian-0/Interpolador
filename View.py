@@ -2,6 +2,11 @@ from tkinter import ttk
 import tkinter as tk
 from Metodos import *
 
+COLOR_PRINCIPAL = "dodger blue"
+COLOR_SECUNDARIO = "sky blue"
+COLOR_ERROR = "red"
+FONT_TITULO = ("Verdana", 13)
+FONT_PRINCIPAL = ("Arial", 11)
 
 class AppFinter(Tk):
 
@@ -13,7 +18,7 @@ class AppFinter(Tk):
 
         container = Frame()
         container.pack(side="top", fill="both", expand=True)
-        container.config(bg="dodger blue")
+        container.config(bg=COLOR_PRINCIPAL)
         container.config(width="650", height="350")
         container.config(relief="groove", bd=35)
 
@@ -27,10 +32,10 @@ class AppFinter(Tk):
 
         self.mostrarFrame(PaginaInicial)
 
-
     def mostrarFrame(self, vista):
         frame = self.frames[vista]
         frame.tkraise()
+
 
 class PaginaInicial(tk.Frame):
     ordenadas = []
@@ -38,20 +43,22 @@ class PaginaInicial(tk.Frame):
 
     def __init__(self, padre, controlador):
         tk.Frame.__init__(self, padre)
+        self.config(bg=COLOR_PRINCIPAL)
 
-        Label(self, text="Bienvenido!", bg="dodger blue").grid(row=1, column=0)
+        Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
         # Frame Container
-        frame = LabelFrame(self, text='Ingrese puntos')
+        frame = LabelFrame(self, text='Ingrese puntos', font=FONT_PRINCIPAL)
         frame.grid(row=3, column=0)
+        frame.config(bg=COLOR_SECUNDARIO)
 
         # Ordenada Input
-        Label(frame, text='Ordenada: ').grid(row=4, column=0)
+        Label(frame, text='Ordenada: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
         self.ordenada = Entry(frame)
         self.ordenada.grid(row=4, column=1)
 
         # Imagen Input
-        Label(frame, text='Imagen: ').grid(row=5, column=0)
+        Label(frame, text='Imagen: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=5, column=0)
         self.imagen = Entry(frame)
         self.imagen.grid(row=5, column=1)
 
@@ -60,7 +67,7 @@ class PaginaInicial(tk.Frame):
         boton.grid(row=6, column=0, columnspan=2)
 
         # Mensaje resultado
-        self.mensaje = Label(frame, text='', fg='black')
+        self.mensaje = Label(frame, text='', fg=COLOR_ERROR, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         self.mensaje.grid(row=8, column=0, columnspan=2)
 
         # Tabla
@@ -70,15 +77,16 @@ class PaginaInicial(tk.Frame):
         self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
 
         # Seleccion de metodo
-        frameMetodo = LabelFrame(self, text='Seleccione un metodo')
+        frameMetodo = LabelFrame(self, text='Seleccione un metodo', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         frameMetodo.grid(row=10, column=0, pady=5)
-        self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24)
+        self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24, font=FONT_PRINCIPAL)
         self.combo.pack()
         self.combo["values"] = ["Lagrange", "Newton Gregory progresivo", "Newton Gregory regresivo"]
         self.combo.set("Lagrange")
 
         # Boton calcular
-        botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4", command=self.ventanaCalcular)
+        botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4",
+                               command=self.ventanaCalcular)
         botonCalcular.grid(row=11, column=0)
 
     def ventanaCalcular(self):
@@ -112,6 +120,7 @@ class PaginaInicial(tk.Frame):
     def limpiarInputs(self):
         self.ordenada.delete(0, 'end')
         self.imagen.delete(0, 'end')
+
 
 if __name__ == '__main__':
     app = AppFinter()
