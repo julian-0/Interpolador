@@ -8,6 +8,7 @@ COLOR_ERROR = "red"
 FONT_TITULO = ("Verdana", 13)
 FONT_PRINCIPAL = ("Arial", 11)
 
+
 class AppFinter(Tk):
 
     def __init__(self):
@@ -129,23 +130,23 @@ class VistaPolinomio(tk.Frame):
         Label(self, text="Vista polinomio", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
         boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
-                               command=lambda: controlador.mostrarFrame(VistaInicial))
+                       command=lambda: controlador.mostrarFrame(VistaInicial))
         boton.grid(row=2, column=0)
 
+    def cargarPolinomio(self, padre):
+        self.padre = padre
 
-
-    def cargarPolinomio(self,padre):
         Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=0)
         i = 0
         for o in padre.ordenadas:
-            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4+i, column=0)
-            i = i+1
+            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4 + i, column=0)
+            i = i + 1
 
         Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=1)
         j = 0
         for img in padre.imagenes:
-            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4+j, column=1)
-            j = j+1
+            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4 + j, column=1)
+            j = j + 1
 
 
 if __name__ == '__main__':
