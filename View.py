@@ -24,25 +24,25 @@ class AppFinter(Tk):
 
         self.frames = {}
 
-        frame = PaginaInicial(container, self)
+        for Vista in (VistaInicial, VistaPolinomio):
+            frame = Vista(container, self)
+            self.frames[Vista] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
 
-        self.frames[PaginaInicial] = frame
-
-        frame.grid(row=0, column=0, sticky="nsew")
-
-        self.mostrarFrame(PaginaInicial)
+        self.mostrarFrame(VistaInicial)
 
     def mostrarFrame(self, vista):
         frame = self.frames[vista]
         frame.tkraise()
 
 
-class PaginaInicial(tk.Frame):
+class VistaInicial(tk.Frame):
     ordenadas = []
     imagenes = []
 
-    def __init__(self, padre, controlador):
+    def __init__(self, padre, controller):
         tk.Frame.__init__(self, padre)
+        self.controlador = controller
         self.config(bg=COLOR_PRINCIPAL)
 
         Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
@@ -86,20 +86,15 @@ class PaginaInicial(tk.Frame):
 
         # Boton calcular
         botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4",
-                               command=self.ventanaCalcular)
+                               command=lambda: self.calcularPolinomio())
         botonCalcular.grid(row=11, column=0)
-
-    def ventanaCalcular(self):
-        vCalcular = Toplevel()
-        vCalcular.title("Polinomio interpolante")
-        self.raiz.withdraw()
 
     def validar(self):
         if not self.completos():
             self.mensaje['text'] = 'Los campos deben estar completos'
             return False
         if not self.numericos():
-            self.mensaje['text'] = 'Los valores deben ser numericos'
+            self.mensaje['text'] = 'Los valores deben ser numéricos'
             return False
         return True
 
@@ -120,6 +115,37 @@ class PaginaInicial(tk.Frame):
     def limpiarInputs(self):
         self.ordenada.delete(0, 'end')
         self.imagen.delete(0, 'end')
+
+    def calcularPolinomio(self):
+        frame = self.controlador.frames[VistaPolinomio]
+        frame.cargarPolinomio(self)
+        self.controlador.mostrarFrame(VistaPolinomio)
+
+
+class VistaPolinomio(tk.Frame):
+
+    def __init__(self, padre, controlador):
+        tk.Frame.__init__(self, padre)
+        Label(self, text="Vista polinomio", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
+
+        boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
+                               command=lambda: controlador.mostrarFrame(VistaInicial))
+        boton.grid(row=2, column=0)
+
+
+
+    def cargarPolinomio(self,padre):
+        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=0)
+        i = 0
+        for o in padre.ordenadas:
+            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4+i, column=0)
+            i = i+1
+
+        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=3, column=1)
+        j = 0
+        for img in padre.imagenes:
+            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4+j, column=1)
+            j = j+1
 
 
 if __name__ == '__main__':
