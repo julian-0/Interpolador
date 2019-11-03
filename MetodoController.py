@@ -5,7 +5,7 @@ x = symbols('x')
 
 class MetodoController():
     # TODO agregar las otras clases
-    clases = {"Lagrange": Lagrange(), "Newton Gregory progresivo": int, "Newton Gregory regresivo": int}
+    clases = {"Lagrange": Lagrange(), "Newton Gregory progresivo": NewtonGregoryProgresivo(), "Newton Gregory regresivo": int}
 
     def cargar(self, dominio, imagenes, metodoPol):
         self.metodo = self.clases[metodoPol]
@@ -21,6 +21,8 @@ class MetodoController():
     def obtenerGrado(self):
         return self.grado
 
-    # TODO sacar esto
     def obtenerPasos(self):
-        return ["L0(X) = (X-2)(X-5)  L0(X0) = 4", "L1(X) = (X-1)(X-5)  L1(X1) = -3", "L2(X) = (X-1)(X-2)  L2(X2) = 12"]
+        return self.metodo.mostrarPasos()
+
+    def obtenerImagen(self, punto):
+        return self.metodo.obtenerValorPara(punto)
