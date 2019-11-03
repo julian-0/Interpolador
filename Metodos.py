@@ -23,8 +23,47 @@ class MetodoFINTER:
     def mostrarPasos(self):
         pass
     def obtenerValorPara(self,K):
-        pass
+        polinomio = self.obtenerPolinomioInterpolante()
+        print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
+        return polinomio.subs(x,K) #Para el test.Se puede sacar
 
+class NewtonGregoryProgresivo(MetodoFINTER):
+    def obtenerPolinomioInterpolante(self):
+        polNewton = self.imagen[0]
+        for i in range(1,len(self.imagen)):
+            polNewton = polNewton + (self.agregar(i)/factorial(i))*self.obtenerSumaParcial(self.imagen)[0][i]
+        return polNewton
+
+    def obtenerSumaParcial(self,listaDatos):
+        matriz = []
+        numero_filas = len(listaDatos)
+        numero_columnas = len(listaDatos)
+        for i in range(numero_filas):
+            matriz.append([])
+            for j in range(numero_columnas):
+                matriz[i].append(None)
+
+        for i in range(numero_filas):
+            for j in range(numero_columnas):
+                matriz[i][j] = 0
+
+        for i in range(numero_filas): #datos iniciales
+                matriz[i][0] = listaDatos[i]
+
+        for h in range(1,numero_columnas):
+            for i in range(numero_filas-1):
+                matriz[i][h] = matriz[i+1][h-1]-matriz[i][h-1]
+
+        return matriz
+
+    def agregar(self,nro):
+        pol = 1
+        cant = nro -1
+        pol = pol * (t-cant)
+        while(cant >= 1):
+            cant = cant-1
+            pol = pol * (t-cant)
+        return pol
 
 class Lagrange(MetodoFINTER):
     def obtenerL(self,nroDeL):
@@ -45,32 +84,24 @@ class Lagrange(MetodoFINTER):
         for i in range(len(self.dominio)):
             polinomio = polinomio + self.imagen[i] * self.obtenerL(i)
         return polinomio
-    def mostrarPasos(self):#Por ahora printea pero podria devolver un String
+    def mostrarPasos(self):
         print("-----------Metodo de Lagrange-----------")
+        pasos = []
+        paso1 = "Paso 1: Calculo de los L(x) correspondientes:\n"
         #Mostrar cada Li(Xi)
         for i in range(len(self.dominio)):
             foo = "L"+str(i)
-            print(foo," = ",self.obtenerL(0))
+            print(foo," = ",self.obtenerL(i))
+            paso1 += (foo+" = " + str(self.obtenerL(i))+"\n" )
         print("-------------")
+        pasos.append(paso1)
         polinomio = self.obtenerPolinomioInterpolante()
         print("Polinomio de grado ",degree(polinomio)," obtenido: ")
         print(polinomio.as_poly())
+        pasos.append("Paso 2: Reemplazamos en la formula: ")
+        pasos.append(str(polinomio.as_poly) )
+        return pasos
 
-    def obtenerValorPara(self,K):#Por ahora printea pero podria devolver un String
-        polinomio = self.obtenerPolinomioInterpolante()
-        print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
-        return polinomio.subs(x,K) #Para el test.Se puede sacar
 
-#Son solo pruebas, para testear mas rapido.
-algo = Lagrange()
-algo.obtenerValorPara(7.5)
-"""
-poli = algo.obtenerPolinomioInterpolante()
-print("El polinomio obtenido es: ", poli)
-print ("La imagen aproximada en 7.5 es: ",poli.subs(x, 7.5))
-algo.mostrarPasos();
-
-otraCosa = (x + y)*(y - 2.2*z)
-otraCosa.as_poly() #Hace la distributiva
-print (otraCosa.as_poly())
-"""
+e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
+e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
