@@ -21,5 +21,6 @@ class MetodoController():
     def obtenerGrado(self):
         return self.grado
 
+    # TODO sacar esto
     def obtenerPasos(self):
         return ["L0(X) = (X-2)(X-5)  L0(X0) = 4", "L1(X) = (X-1)(X-5)  L1(X1) = -3", "L2(X) = (X-1)(X-2)  L2(X2) = 12"]
