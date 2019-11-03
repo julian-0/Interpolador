@@ -5,7 +5,7 @@ from Metodos import *
 COLOR_PRINCIPAL = "dodger blue"
 COLOR_SECUNDARIO = "sky blue"
 COLOR_ERROR = "red"
-FONT_TITULO = ("Verdana", 13)
+FONT_TITULO = ("Verdana", 15)
 FONT_PRINCIPAL = ("Arial", 11)
 
 
@@ -38,7 +38,7 @@ class AppFinter(Tk):
 
 
 class VistaInicial(tk.Frame):
-    ordenadas = []
+    dominios = []
     imagenes = []
     metodoElegido = ""
 
@@ -55,9 +55,9 @@ class VistaInicial(tk.Frame):
         frame.config(bg=COLOR_SECUNDARIO)
 
         # Ordenada Input
-        Label(frame, text='Ordenada: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
-        self.ordenada = Entry(frame)
-        self.ordenada.grid(row=4, column=1)
+        Label(frame, text='Dominio: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
+        self.dominio = Entry(frame)
+        self.dominio.grid(row=4, column=1)
 
         # Imagen Input
         Label(frame, text='Imagen: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=5, column=0)
@@ -75,7 +75,7 @@ class VistaInicial(tk.Frame):
         # Tabla
         self.tabla = ttk.Treeview(self, height=10, columns=2)
         self.tabla.grid(row=9, column=0)
-        self.tabla.heading('#0', text='Ordenada', anchor=tk.CENTER)
+        self.tabla.heading('#0', text='Dominio', anchor=tk.CENTER)
         self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
 
         # Seleccion de metodo
@@ -101,21 +101,21 @@ class VistaInicial(tk.Frame):
         return True
 
     def completos(self):
-        return len(self.ordenada.get()) != 0 and len(self.imagen.get()) != 0
+        return len(self.dominio.get()) != 0 and len(self.imagen.get()) != 0
 
     def numericos(self):
-        return self.ordenada.get().replace('.', '', 1).isdigit() and self.imagen.get().replace('.', '', 1).isdigit()
+        return self.dominio.get().replace('.', '', 1).isdigit() and self.imagen.get().replace('.', '', 1).isdigit()
 
     def agregarPunto(self):
         self.mensaje['text'] = ''
         if self.validar():
-            self.ordenadas.append(float(self.ordenada.get()))
+            self.dominios.append(float(self.dominio.get()))
             self.imagenes.append(float(self.imagen.get()))
-            self.tabla.insert('', 'end', text=self.ordenada.get(), values=self.imagen.get())
+            self.tabla.insert('', 'end', text=self.dominio.get(), values=self.imagen.get())
         self.limpiarInputs()
 
     def limpiarInputs(self):
-        self.ordenada.delete(0, 'end')
+        self.dominio.delete(0, 'end')
         self.imagen.delete(0, 'end')
 
     def calcularPolinomio(self):
@@ -129,30 +129,27 @@ class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
         tk.Frame.__init__(self, padre)
-        Label(self, text="Vista polinomio", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
+        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
         self.boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
-                       command=lambda: controlador.mostrarFrame(VistaInicial))
+                            command=lambda: controlador.mostrarFrame(VistaInicial))
         self.boton.grid(row=2, column=0)
 
         self.lMetodo = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_TITULO)
         self.lMetodo.grid(row=3, column=0)
 
-        Label(self, text="Ordenadas", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=0)
+        Label(self, text="Dominios", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=0)
         Label(self, text="Imagenes", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=1)
 
     def cargarPolinomio(self, padre):
         self.padre = padre
-        self.lMetodo['text']=padre.metodoElegido
-        i = 0
-        for o in padre.ordenadas:
-            Label(self, text=o, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=5 + i, column=0)
-            i = i + 1
-
-        j = 0
-        for img in padre.imagenes:
-            Label(self, text=img, bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=5 + j, column=1)
-            j = j + 1
+        self.lMetodo['text'] = "Metodo: " + padre.metodoElegido
+        """"
+        if padre.metodoElegido == "Lagrange":
+            self.cargarVistaLagrange()
+        else:
+            self.cargarVistaNewtonGregory()
+        """
 
 
 if __name__ == '__main__':
