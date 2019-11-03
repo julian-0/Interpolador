@@ -1,6 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
-from Metodos import *
+from MetodoController import *
 
 COLOR_PRINCIPAL = "dodger blue"
 COLOR_SECUNDARIO = "sky blue"
@@ -121,7 +121,7 @@ class VistaInicial(tk.Frame):
     def calcularPolinomio(self):
         self.metodoElegido = self.combo.get()
         frame = self.controlador.frames[VistaPolinomio]
-        frame.cargarPolinomio(self)
+        frame.cargarResultados(self)
         self.controlador.mostrarFrame(VistaPolinomio)
 
 
@@ -129,27 +129,55 @@ class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
         tk.Frame.__init__(self, padre)
-        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
+        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=0, column=0)
 
-        self.boton = Button(self, text="Volver", bg="firebrick3", activebackground="darkOrchid4",
-                            command=lambda: controlador.mostrarFrame(VistaInicial))
-        self.boton.grid(row=2, column=0)
+        self.lPolinomio = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lPolinomio.grid(row=2, column=0)
 
-        self.lMetodo = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_TITULO)
+        self.lMetodo = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lMetodo.grid(row=3, column=0)
+        self.lGrado = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lGrado.grid(row=4, column=0)
+        self.lEspaciado = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lEspaciado.grid(row=5, column=0)
 
-        Label(self, text="Dominios", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=0)
-        Label(self, text="Imagenes", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=4, column=1)
+        # Frame pasos
+        self.framePasos = LabelFrame(self, text='Pasos', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        self.framePasos.grid(row=6, column=0, pady=5)
 
-    def cargarPolinomio(self, padre):
+        # Frame calcular en punto
+        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        self.framePunto.grid(row=7, column=0, pady=5)
+
+        # Frame botones
+        self.frameBotones = Frame(self, bg=COLOR_SECUNDARIO)
+        self.frameBotones.grid(row=8, column=0, pady=5)
+
+        self.boton = Button(self.frameBotones, text="Alterar valores", bg="firebrick3", activebackground="darkOrchid4",
+                            command=lambda: controlador.mostrarFrame(VistaInicial))
+        self.boton.grid(row=0, column=0)
+
+        self.boton = Button(self.frameBotones, text="Finalizar", bg="firebrick3", activebackground="darkOrchid4",
+                            command=controlador.destroy)
+        self.boton.grid(row=0, column=1)
+
+    def cargarResultados(self, padre):
         self.padre = padre
         self.lMetodo['text'] = "Metodo: " + padre.metodoElegido
-        """"
-        if padre.metodoElegido == "Lagrange":
-            self.cargarVistaLagrange()
-        else:
-            self.cargarVistaNewtonGregory()
-        """
+
+        modelController = MetodoController()
+        modelController.cargar(padre.dominios, padre.imagenes, padre.metodoElegido)
+
+        self.lPolinomio['text'] = modelController.obtenerPolinomio()
+        self.lGrado['text'] = "Grado: " + modelController.obtenerGrado().__str__()
+
+        self.cargarPasos(modelController)
+
+    def cargarPasos(self, modelController):
+        pasos = modelController.obtenerPasos()
+
+        for i, p in enumerate(pasos):
+            Label(self.framePasos, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=i, column=0)
 
 
 if __name__ == '__main__':
