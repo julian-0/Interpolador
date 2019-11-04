@@ -102,6 +102,28 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio.as_poly) )
         return pasos
 
+def funcionRecursiva(lista,listaX):
+    lista1 = lista[:]
+    lista2 = lista[:]
+    listaX1 = listaX[:]
+    listaX2 = listaX[:]
+    lista1.pop(0)
+    listaX1.pop(0)
+    lista2.pop(len(lista)-1)
+    listaX2.pop(len(lista)-1)
+    if(len(lista)==1):
+        print(lista[0])
+        return lista[0]
+    else:
+        return (funcionRecursiva(lista1,listaX1) - funcionRecursiva(lista2,listaX2) )/ (listaX[len(lista)-1] - listaX[0])
 
+
+
+"""
 e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
 e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
+algo = NewtonGregoryProgresivo()
+algo.setDominio([0,2,3,5,6])
+algo.setImagen([0,8,27,125,216])
+print(algo.obtenerSumaParcial([0,8,27,125,216]) )
+"""
