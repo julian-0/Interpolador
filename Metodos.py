@@ -1,5 +1,6 @@
 from tkinter import *
 from sympy import *
+from funcionesNewton import *
 x, y, z, t = symbols('x y z t')
 
 class MetodoFINTER:
@@ -30,31 +31,9 @@ class MetodoFINTER:
 class NewtonGregoryProgresivo(MetodoFINTER):
     def obtenerPolinomioInterpolante(self):
         polNewton = self.imagen[0]
-        for i in range(1,len(self.imagen)):
-            polNewton = polNewton + (self.agregar(i)/factorial(i))*self.obtenerSumaParcial(self.imagen)[0][i]
+
         return polNewton
 
-    def obtenerSumaParcial(self,listaDatos):
-        matriz = []
-        numero_filas = len(listaDatos)
-        numero_columnas = len(listaDatos)
-        for i in range(numero_filas):
-            matriz.append([])
-            for j in range(numero_columnas):
-                matriz[i].append(None)
-
-        for i in range(numero_filas):
-            for j in range(numero_columnas):
-                matriz[i][j] = 0
-
-        for i in range(numero_filas): #datos iniciales
-                matriz[i][0] = listaDatos[i]
-
-        for h in range(1,numero_columnas):
-            for i in range(numero_filas-1):
-                matriz[i][h] = matriz[i+1][h-1]-matriz[i][h-1]
-
-        return matriz
 
     def agregar(self,nro):
         pol = 1
