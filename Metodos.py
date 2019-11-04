@@ -102,21 +102,6 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio.as_poly) )
         return pasos
 
-def funcionRecursiva(lista,listaX):
-    lista1 = lista[:]
-    lista2 = lista[:]
-    listaX1 = listaX[:]
-    listaX2 = listaX[:]
-    lista1.pop(0)
-    listaX1.pop(0)
-    lista2.pop(len(lista)-1)
-    listaX2.pop(len(lista)-1)
-    if(len(lista)==1):
-        print(lista[0])
-        return lista[0]
-    else:
-        return (funcionRecursiva(lista1,listaX1) - funcionRecursiva(lista2,listaX2) )/ (listaX[len(lista)-1] - listaX[0])
-
 
 
 """

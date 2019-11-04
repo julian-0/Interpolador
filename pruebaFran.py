@@ -29,16 +29,21 @@ def sumita(listaDatos,listaDominio):
             matriz[i-1][j] = ( (matriz[i][j-1][0]- matriz[i-1][j-1][0])/(matriz[i][j-1][1]-matriz[i-1][j-1][2]) ,matriz[i][j-1][1],matriz[i-1][j-1][2])
         contador += 1
 
+    for h in range(numero_filas):
+        matriz[h].pop(0)
+
+    matriz = darFormato(matriz,numero_filas)
 
     for i in range (len(listaDatos)):
         print(matriz[i])
 
     return matriz
 
-"""
-    for h in range(1,numero_columnas):
-        for i in range(numero_filas-1):
-            matriz[i][h] = (matriz[i+1][h-1]-matriz[i][h-1])
+def darFormato(matriz,numero_filas):
+    for i in range(numero_filas):
+        for c in range(1,numero_filas):
+            matriz[i][c] = matriz[i][c][0]
+    return matriz
 """
 
 sumita([0,8,27,125,216],[0,2,3,5,6])
@@ -46,3 +51,7 @@ print("---------------")
 sumita([0,8,27],[0,2,3])
 print("---------------")
 sumita([0,8],[0,2])
+"""
+sumita([0,8,27,125,216],[0,2,3,5,6])
+print("---------------")
+sumita([1,3,13,37,151],[1,3,4,5,7])
