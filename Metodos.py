@@ -30,18 +30,42 @@ class MetodoFINTER:
 
 class NewtonGregoryProgresivo(MetodoFINTER):
     def obtenerPolinomioInterpolante(self):
-        polNewton = self.imagen[0]
+        matrizN = obtenerMatriz(self.imagen,self.dominio)
+        polNewton = matrizN[0][0]
 
+        for i in range (1,len(matrizN[0])):
+            #print("saco de la matriz: ",matrizN[0][i])
+            polNewton += matrizN[0][i]*self.gradoX(i)
         return polNewton
 
 
-    def agregar(self,nro):
+    def gradoX(self,nro):
         pol = 1
-        cant = nro -1
-        pol = pol * (t-cant)
+        cant = nro-1
+        pol = pol * (x-self.dominio[cant])
         while(cant >= 1):
             cant = cant-1
-            pol = pol * (t-cant)
+            pol = pol * (x-self.dominio[cant])
+        return pol
+
+class NewtonGregoryRegresivo(MetodoFINTER):
+    def obtenerPolinomioInterpolante(self):
+        matrizN = obtenerMatriz(self.imagen,self.dominio)
+        polNewton = matrizN[len(self.imagen)-1][0]
+
+        for i in range (1,len(matrizN[0])):
+            print("saco de la matriz: ",matrizN[len(self.imagen)-1-i][i])
+            polNewton += matrizN[len(self.imagen)-1-i][i]*self.gradoX(i)
+
+        return polNewton
+    def gradoX(self,nro):
+        dominio = self.dominio[::-1]
+        pol = 1
+        cant = nro-1
+        pol = pol * (x-dominio[cant])
+        while(cant >= 1):
+            cant = cant-1
+            pol = pol * (x-dominio[cant])
         return pol
 
 class Lagrange(MetodoFINTER):
@@ -81,8 +105,16 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio.as_poly) )
         return pasos
 
+algo = NewtonGregoryRegresivo()
+algo.setDominio([1,3,4,5,7])
+algo.setImagen([1,3,13,37,151])
+print(algo.obtenerPolinomioInterpolante().as_poly())
+print("-------")
 
+e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
+e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
 
+print(e.as_poly())
 """
 e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
 e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)

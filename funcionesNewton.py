@@ -1,4 +1,4 @@
-def sumita(listaDatos,listaDominio):
+def obtenerMatriz(listaDatos,listaDominio):
     matriz = []
     numero_filas = len(listaDatos)
     numero_columnas = len(listaDatos)+1
@@ -19,8 +19,6 @@ def sumita(listaDatos,listaDominio):
 
     for i in range(1,numero_filas):
         matriz[i-1][2] = ( (matriz[i][1] - matriz[i-1][1] )/ ( matriz[i][0]-matriz[i-1][0] ),matriz[i][0],matriz[i-1][0] )
-
-
 
     contador = 1
     for j in range(3,numero_columnas):
@@ -51,7 +49,7 @@ print("---------------")
 sumita([0,8,27],[0,2,3])
 print("---------------")
 sumita([0,8],[0,2])
-"""
 sumita([0,8,27,125,216],[0,2,3,5,6])
 print("---------------")
 sumita([1,3,13,37,151],[1,3,4,5,7])
+"""
