@@ -52,19 +52,27 @@ class NewtonGregoryProgresivo(MetodoFINTER):
         print("-----------Metodo de Newton Progresivo-----------")
         pasos = []
         paso1 = "Paso 1: Calculo de las diferencias finitas:\n"
+        pasos.append(paso1)
         #Mostrar cada diferencia(Xi)
         diferencias = obtenerPasosCalculo(self.imagen,self.dominio)
         for i in range(len(diferencias)):
             print(diferencias[i])
-        print("Obteniendose la siguiente matriz: ")
+            pasos.append(diferencias[i])
+        pasos.append("Obteniendose la siguiente matriz: \n")
         matrizN = obtenerMatriz(self.imagen,self.dominio)
         for i in range(len(self.dominio)):
             print(matrizN[i])
+            pasos.append(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
-        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
-        print(polinomio.as_poly())
-    #    pasos.append("Paso 2: Reemplazamos en la formula: ")
-    #    pasos.append(str(polinomio.as_poly) )
+#        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
+#        print(polinomio.as_poly())
+        pasos.append("Paso 2: Reemplazamos en la formula: \n")
+        cadena = ""
+        for i in range (1,len(matrizN[0])):
+            print("a: ",str(matrizN[0][i]))
+            cadena += "a"+str(i-1)+"= "+str(matrizN[0][i])
+        pasos.append(cadena)
+        pasos.append(str(polinomio.as_poly) )
         return pasos
 
 class NewtonGregoryRegresivo(MetodoFINTER):
@@ -73,7 +81,7 @@ class NewtonGregoryRegresivo(MetodoFINTER):
         polNewton = matrizN[len(self.imagen)-1][0]
 
         for i in range (1,len(matrizN[0])):
-            print("saco de la matriz: ",matrizN[len(self.imagen)-1-i][i])
+        #   print("saco de la matriz: ",matrizN[len(self.imagen)-1-i][i])
             polNewton += matrizN[len(self.imagen)-1-i][i]*self.gradoX(i)
 
         return polNewton
@@ -86,6 +94,35 @@ class NewtonGregoryRegresivo(MetodoFINTER):
             cant = cant-1
             pol = pol * (x-dominio[cant])
         return pol
+
+    def mostrarPasos(self):
+        print("-----------Metodo de Newton Regresivo-----------")
+        pasos = []
+        paso1 = "Paso 1: Calculo de las diferencias finitas:\n"
+        pasos.append(paso1)
+        #Mostrar cada diferencia(Xi)
+        diferencias = obtenerPasosCalculo(self.imagen,self.dominio)
+        for i in range(len(diferencias)):
+        #    print(diferencias[i])
+            pasos.append(diferencias[i])
+        pasos.append("Obteniendose la siguiente matriz: \n")
+        matrizN = obtenerMatriz(self.imagen,self.dominio)
+        for i in range(len(self.dominio)):
+        #    print(matrizN[i])
+            pasos.append(matrizN[i])
+        polinomio = self.obtenerPolinomioInterpolante()
+#        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
+#        print(polinomio.as_poly())
+        pasos.append("Paso 2: Reemplazamos en la formula: \n")
+        cadena = ""
+        for i in range (1,len(matrizN[0])):
+        #    print("a: ",matrizN[len(self.imagen)-1-i][i])
+            cadena += "a"+str(i-1)+"= "+str(matrizN[len(self.imagen)-1-i][i])
+        pasos.append(cadena)
+        pasos.append(str(polinomio.as_poly) )
+        return pasos
+
+
 
 class Lagrange(MetodoFINTER):
     def obtenerL(self,nroDeL):
@@ -124,16 +161,20 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio.as_poly) )
         return pasos
 
+
+
+"""
 algo = NewtonGregoryProgresivo()
 algo.setDominio([0,2,3,5,6])
 algo.setImagen([0,8,27,125,216])
 algo.mostrarPasos()
-
-"""
-e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
-e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
-algo = NewtonGregoryProgresivo()
+print("-----")
+#algo = NewtonGregoryRegresivo()
 algo.setDominio([0,2,3,5,6])
 algo.setImagen([0,8,27,125,216])
-print(algo.obtenerSumaParcial([0,8,27,125,216]) )
-"""
+esto = algo.mostrarPasos()
+for i in range (len(esto)):
+    print(esto[i])
+
+e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
+e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
