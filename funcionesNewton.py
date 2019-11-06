@@ -32,8 +32,8 @@ def obtenerMatriz(listaDatos,listaDominio):
 
     matriz = darFormato(matriz,numero_filas)
 
-    for i in range (len(listaDatos)):
-        print(matriz[i])
+#    for i in range (len(listaDatos)):
+#        print(matriz[i])
 
     return matriz
 
@@ -57,19 +57,21 @@ def obtenerPasosCalculo(listaDatos,listaDominio):
             matriz[i][1] = listaDatos[i]
 
 
-    for i in range(1,numero_filas):
+    for i in range(1,numero_filas): #Calcula las primeras divisiones finitas en la matriz
         matriz[i-1][2] = ( (matriz[i][1] - matriz[i-1][1] )/ ( matriz[i][0]-matriz[i-1][0] ),matriz[i][0],matriz[i-1][0] )
-        if(i==1):
-            paso= "f[X" + str(i-1)+",X"+str(i)+"] = ("+str(matriz[i][1])+" - "+str(matriz[i-1][1])+")/ ("+str(matriz[i][0])+" - "+str(matriz[i-1][0])+")"
-            pasos.append(paso)
+    #    if(i==1):
+        paso= "f[X"+str(i-1)+",X"+str(i)+"] = " +"("+ str(matriz[i][1])+" - "+str(matriz[i-1][1])+")/ ("+str(matriz[i][0])+" - "+str(matriz[i-1][0])+")"
+        pasos.append(paso)
+    print("-------")
     contador = 1
     for j in range(3,numero_columnas):
-        paso = agregarXveces(j)
         for i in range(1,numero_filas-contador):
+            paso = agregarXveces(i,j)
+    #        paso = "f[X"+str(i-1)+",X"+str(i)+",X"+str(i+1)+"] = "
             matriz[i-1][j] = ( (matriz[i][j-1][0]- matriz[i-1][j-1][0])/(matriz[i][j-1][1]-matriz[i-1][j-1][2]) ,matriz[i][j-1][1],matriz[i-1][j-1][2])
-            if(i==1):
-                paso+= "("+str(matriz[i][j-1][0])+" - "+str(matriz[i-1][j-1][0])+")/ ("+str(matriz[i][j-1][1])+" - "+str(matriz[i-1][j-1][2])+")"
-                pasos.append(paso)
+            #if(i==1):
+            paso+= "("+str(matriz[i][j-1][0])+" - "+str(matriz[i-1][j-1][0])+")/ ("+str(matriz[i][j-1][1])+" - "+str(matriz[i-1][j-1][2])+")"
+            pasos.append(paso)
         contador += 1
 
 
@@ -81,23 +83,14 @@ def darFormato(matriz,numero_filas):
             matriz[i][c] = matriz[i][c][0]
     return matriz
 
-def agregarXveces(nro):
+def agregarXveces(nro,orden):
     cadena = "f["
-    for j in range(nro):
-        if (j==0):
+    primero = True
+    for j in range(nro-1,nro+orden-1):
+        if (primero):
             cadena += "X"+str(j)
+            primero = False
         else:
             cadena += ",X"+str(j)
     cadena+="] = "
     return cadena
-"""
-
-sumita([0,8,27,125,216],[0,2,3,5,6])
-print("---------------")
-sumita([0,8,27],[0,2,3])
-print("---------------")
-sumita([0,8],[0,2])
-sumita([0,8,27,125,216],[0,2,3,5,6])
-print("---------------")
-sumita([1,3,13,37,151],[1,3,4,5,7])
-"""

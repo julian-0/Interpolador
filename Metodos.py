@@ -48,13 +48,18 @@ class NewtonGregoryProgresivo(MetodoFINTER):
             pol = pol * (x-self.dominio[cant])
         return pol
 
-    def mostrarPasos():
+    def mostrarPasos(self):
         print("-----------Metodo de Newton Progresivo-----------")
         pasos = []
         paso1 = "Paso 1: Calculo de las diferencias finitas:\n"
         #Mostrar cada diferencia(Xi)
+        diferencias = obtenerPasosCalculo(self.imagen,self.dominio)
+        for i in range(len(diferencias)):
+            print(diferencias[i])
+        print("Obteniendose la siguiente matriz: ")
+        matrizN = obtenerMatriz(self.imagen,self.dominio)
         for i in range(len(self.dominio)):
-            foo = "[f"+str(i)+"]"
+            print(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
         print("Polinomio de grado ",degree(polinomio)," obtenido: ")
         print(polinomio.as_poly())
@@ -122,10 +127,7 @@ class Lagrange(MetodoFINTER):
 algo = NewtonGregoryProgresivo()
 algo.setDominio([0,2,3,5,6])
 algo.setImagen([0,8,27,125,216])
-otra = obtenerPasosCalculo(algo.imagen,algo.dominio)
-for i in range (len(otra)):
-    print(otra[i])
-
+algo.mostrarPasos()
 
 """
 e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
