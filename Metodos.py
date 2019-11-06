@@ -48,6 +48,20 @@ class NewtonGregoryProgresivo(MetodoFINTER):
             pol = pol * (x-self.dominio[cant])
         return pol
 
+    def mostrarPasos():
+        print("-----------Metodo de Newton Progresivo-----------")
+        pasos = []
+        paso1 = "Paso 1: Calculo de las diferencias finitas:\n"
+        #Mostrar cada diferencia(Xi)
+        for i in range(len(self.dominio)):
+            foo = "[f"+str(i)+"]"
+        polinomio = self.obtenerPolinomioInterpolante()
+        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
+        print(polinomio.as_poly())
+    #    pasos.append("Paso 2: Reemplazamos en la formula: ")
+    #    pasos.append(str(polinomio.as_poly) )
+        return pasos
+
 class NewtonGregoryRegresivo(MetodoFINTER):
     def obtenerPolinomioInterpolante(self):
         matrizN = obtenerMatriz(self.imagen,self.dominio)
@@ -105,16 +119,14 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio.as_poly) )
         return pasos
 
-algo = NewtonGregoryRegresivo()
-algo.setDominio([1,3,4,5,7])
-algo.setImagen([1,3,13,37,151])
-print(algo.obtenerPolinomioInterpolante().as_poly())
-print("-------")
+algo = NewtonGregoryProgresivo()
+algo.setDominio([0,2,3,5,6])
+algo.setImagen([0,8,27,125,216])
+otra = obtenerPasosCalculo(algo.imagen,algo.dominio)
+for i in range (len(otra)):
+    print(otra[i])
 
-e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
-e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
 
-print(e.as_poly())
 """
 e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
 e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
