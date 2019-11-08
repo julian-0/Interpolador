@@ -32,7 +32,10 @@ class MetodoController():
     def esEquiespaciado(self):
         dominio = self.metodo.getDominio()
         espacio = abs(dominio[0] - dominio[1])
-        return self.tienenDistancia(dominio, 0, espacio)
+        if self.tienenDistancia(dominio, 0, espacio):
+            return "Si"
+        else:
+            return "No"
 
     def tienenDistancia(self, puntos, pos, dist):
         if pos == len(puntos) - 1:
