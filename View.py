@@ -38,8 +38,6 @@ class AppFinter(Tk):
 
 
 class VistaInicial(tk.Frame):
-    dominios = []
-    imagenes = []
     metodoElegido = ""
 
     def __init__(self, padre, controller):
@@ -114,10 +112,20 @@ class VistaInicial(tk.Frame):
     def agregarPunto(self):
         self.mensaje['text'] = ''
         if self.validar():
-            self.dominios.append(float(self.dominio.get()))
-            self.imagenes.append(float(self.imagen.get()))
             self.tabla.insert('', 'end', text=self.dominio.get(), values=self.imagen.get())
         self.limpiarInputs()
+
+    def getImagenes(self):
+        imagenes = []
+        for child in self.tabla.get_children():
+            imagenes.append(float(self.tabla.item(child)["values"][0]))
+        return imagenes
+
+    def getDominios(self):
+        dominio = []
+        for child in self.tabla.get_children():
+            dominio.append(float(self.tabla.item(child)["text"]))
+        return dominio
 
     def limpiarInputs(self):
         self.dominio.delete(0, 'end')
@@ -198,7 +206,7 @@ class VistaPolinomio(tk.Frame):
         self.lMetodo['text'] = "Metodo: " + padre.metodoElegido
 
         self.modelController = MetodoController()
-        self.modelController.cargar(padre.dominios, padre.imagenes, padre.metodoElegido)
+        self.modelController.cargar(padre.getDominios(), padre.getImagenes(), padre.metodoElegido)
 
 
         self.lPolinomio['text'] = self.modelController.obtenerPolinomio()
