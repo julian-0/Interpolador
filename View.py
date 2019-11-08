@@ -7,7 +7,9 @@ COLOR_SECUNDARIO = "sky blue"
 COLOR_ERROR = "red"
 FONT_TITULO = ("Times", 15, "bold")
 FONT_PRINCIPAL = ("Arial", 11)
-FONT_PRINCIPAL_SUB = ("Arial", 12)
+FONT_PRINCIPAL_1 = ("Arial", 12)
+FONT_PRINCIPAL_SUB = ("Arial", 12, "underline")
+FONT_PRINCIPAL_BOLD = ("Arial", 11, "bold")
 
 class AppFinter(Tk):
 
@@ -48,7 +50,7 @@ class VistaInicial(tk.Frame):
         Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
         # Frame Container
-        frame = LabelFrame(self, text='Ingrese puntos:', font=FONT_PRINCIPAL_SUB)
+        frame = LabelFrame(self, text='Ingrese puntos:', font=FONT_PRINCIPAL_1)
         frame.grid(row=2, column=0)
         frame.config(bg=COLOR_SECUNDARIO, bd=0)
 
@@ -147,7 +149,7 @@ class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
         tk.Frame.__init__(self, padre)
-        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, font=FONT_TITULO).pack()
+        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=10, font=FONT_TITULO).pack()
         self.config(bg=COLOR_PRINCIPAL)
 
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
@@ -169,18 +171,18 @@ class VistaPolinomio(tk.Frame):
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
 
         # Frame pasos
-        self.framePasos = LabelFrame(self, text='Pasos', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePasos.pack()
 
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
 
         # Frame calcular en punto
-        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePunto.pack()
         Label(self.framePunto, text="Punto: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=0, column=0)
         self.punto = Entry(self.framePunto)
-        self.punto.grid(row=0, column=1)
-        self.boton = Button(self.framePunto, text="Calcular", bg="firebrick3", activebackground="darkOrchid4", command= lambda:self.calcularImagen(self.punto.get()))
+        self.punto.grid(row=0, column=1, padx=5)
+        self.boton = Button(self.framePunto, text="Calcular", bg="springGreen2", activebackground="springGreen3", command= lambda:self.calcularImagen(self.punto.get()))
         self.boton.grid(row=0, column=2)
         self.lImagen = Label(self.framePunto, text="Imagen: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         self.lImagen.grid(row=1, column=0)
@@ -191,14 +193,14 @@ class VistaPolinomio(tk.Frame):
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
 
         # Frame botones
-        self.frameBotones = Frame(self, bg=COLOR_SECUNDARIO)
+        self.frameBotones = Frame(self, bg=COLOR_PRINCIPAL)
         self.frameBotones.pack()
 
-        self.boton = Button(self.frameBotones, text="Alterar valores", bg="firebrick3", activebackground="darkOrchid4",
+        self.boton = Button(self.frameBotones, text="Alterar valores",bg="firebrick2", activebackground="firebrick3",
                             command=lambda: controlador.mostrarFrame(VistaInicial))
-        self.boton.grid(row=0, column=0)
+        self.boton.grid(row=0, column=0, padx=10)
 
-        self.boton = Button(self.frameBotones, text="Finalizar", bg="firebrick3", activebackground="darkOrchid4",
+        self.boton = Button(self.frameBotones, text="Finalizar", bg="firebrick2", activebackground="firebrick3",
                             command=controlador.destroy)
         self.boton.grid(row=0, column=1)
 
