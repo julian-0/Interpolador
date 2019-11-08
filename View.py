@@ -5,9 +5,9 @@ from MetodoController import *
 COLOR_PRINCIPAL = "dodger blue"
 COLOR_SECUNDARIO = "sky blue"
 COLOR_ERROR = "red"
-FONT_TITULO = ("Verdana", 15)
+FONT_TITULO = ("Times", 15, "bold")
 FONT_PRINCIPAL = ("Arial", 11)
-
+FONT_PRINCIPAL_SUB = ("Arial", 12)
 
 class AppFinter(Tk):
 
@@ -50,14 +50,14 @@ class VistaInicial(tk.Frame):
         Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
 
         # Frame Container
-        frame = LabelFrame(self, text='Ingrese puntos', font=FONT_PRINCIPAL)
+        frame = LabelFrame(self, text='Ingrese puntos:', font=FONT_PRINCIPAL_SUB)
         frame.grid(row=2, column=0)
-        frame.config(bg=COLOR_SECUNDARIO)
+        frame.config(bg=COLOR_SECUNDARIO, bd=0)
 
         # Ordenada Input
         Label(frame, text='Dominio: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=3, column=0)
         self.dominio = Entry(frame)
-        self.dominio.grid(row=3, column=1)
+        self.dominio.grid(row=3, column=1, pady=5, padx=5)
 
         # Imagen Input
         Label(frame, text='Imagen: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
@@ -65,7 +65,7 @@ class VistaInicial(tk.Frame):
         self.imagen.grid(row=4, column=1)
 
         # Boton agregar
-        boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="turquoise", activebackground="cyan")
+        boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="springGreen2", bd=1, activebackground="springGreen3")
         boton.grid(row=5, column=0, columnspan=2, pady=5)
 
         # Mensaje resultado
@@ -79,12 +79,13 @@ class VistaInicial(tk.Frame):
         self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
 
         # Eliminar punto seleccionado
-        botonEliminar = Button(self, text="Eliminar punto", bg="firebrick3", activebackground="darkOrchid4",
+        botonEliminar = Button(self, text="Eliminar punto", bg="firebrick2", bd=1, activebackground="firebrick3",
                                command=lambda: self.eliminarPunto())
         botonEliminar.grid(row=8, column=0, pady=5)
 
         # Seleccion de metodo
-        frameMetodo = LabelFrame(self, text='Seleccione un metodo', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        frameMetodo = LabelFrame(self, text='Seleccione un metodo:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+        frameMetodo.config(bg=COLOR_SECUNDARIO, bd=0)
         frameMetodo.grid(row=9, column=0, pady=5)
         self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24, font=FONT_PRINCIPAL)
         self.combo.pack()
@@ -92,7 +93,7 @@ class VistaInicial(tk.Frame):
         self.combo.current(0)
 
         # Boton calcular
-        botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4",
+        botonCalcular = Button(self, text="Calcular", bg="springGreen2", bd=1, activebackground="springGreen3",
                                command=lambda: self.calcularPolinomio())
         botonCalcular.grid(row=10, column=0)
 
