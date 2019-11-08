@@ -51,36 +51,41 @@ class VistaInicial(tk.Frame):
 
         # Frame Container
         frame = LabelFrame(self, text='Ingrese puntos', font=FONT_PRINCIPAL)
-        frame.grid(row=3, column=0)
+        frame.grid(row=2, column=0)
         frame.config(bg=COLOR_SECUNDARIO)
 
         # Ordenada Input
-        Label(frame, text='Dominio: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
+        Label(frame, text='Dominio: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=3, column=0)
         self.dominio = Entry(frame)
-        self.dominio.grid(row=4, column=1)
+        self.dominio.grid(row=3, column=1)
 
         # Imagen Input
-        Label(frame, text='Imagen: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=5, column=0)
+        Label(frame, text='Imagen: ', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=4, column=0)
         self.imagen = Entry(frame)
-        self.imagen.grid(row=5, column=1)
+        self.imagen.grid(row=4, column=1)
 
         # Boton agregar
         boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="turquoise", activebackground="cyan")
-        boton.grid(row=6, column=0, columnspan=2)
+        boton.grid(row=5, column=0, columnspan=2, pady=5)
 
         # Mensaje resultado
         self.mensaje = Label(frame, text='', fg=COLOR_ERROR, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
-        self.mensaje.grid(row=8, column=0, columnspan=2)
+        self.mensaje.grid(row=6, column=0, columnspan=2)
 
         # Tabla
         self.tabla = ttk.Treeview(self, height=10, columns=2)
-        self.tabla.grid(row=9, column=0)
+        self.tabla.grid(row=7, column=0, pady=5)
         self.tabla.heading('#0', text='Dominio', anchor=tk.CENTER)
         self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
 
+        # Eliminar punto seleccionado
+        botonEliminar = Button(self, text="Eliminar punto", bg="firebrick3", activebackground="darkOrchid4",
+                               command=lambda: self.eliminarPunto())
+        botonEliminar.grid(row=8, column=0, pady=5)
+
         # Seleccion de metodo
         frameMetodo = LabelFrame(self, text='Seleccione un metodo', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
-        frameMetodo.grid(row=10, column=0, pady=5)
+        frameMetodo.grid(row=9, column=0, pady=5)
         self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24, font=FONT_PRINCIPAL)
         self.combo.pack()
         self.combo["values"] = ["Lagrange", "Newton Gregory progresivo", "Newton Gregory regresivo"]
@@ -89,7 +94,7 @@ class VistaInicial(tk.Frame):
         # Boton calcular
         botonCalcular = Button(self, text="Calcular", bg="firebrick3", activebackground="darkOrchid4",
                                command=lambda: self.calcularPolinomio())
-        botonCalcular.grid(row=11, column=0)
+        botonCalcular.grid(row=10, column=0)
 
     def validar(self):
         if not self.completos():
@@ -118,13 +123,17 @@ class VistaInicial(tk.Frame):
         self.dominio.delete(0, 'end')
         self.imagen.delete(0, 'end')
 
+
     def calcularPolinomio(self):
         self.metodoElegido = self.combo.get()
         frame = self.controlador.frames[VistaPolinomio]
         frame.cargarResultados(self)
         self.controlador.mostrarFrame(VistaPolinomio)
 
-
+    def eliminarPunto(self):
+        selected_item = self.tabla.selection()[0]
+        self.tabla.delete(selected_item)
+        
 class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
@@ -190,6 +199,7 @@ class VistaPolinomio(tk.Frame):
 
         self.modelController = MetodoController()
         self.modelController.cargar(padre.dominios, padre.imagenes, padre.metodoElegido)
+
 
         self.lPolinomio['text'] = self.modelController.obtenerPolinomio()
         self.lGrado['text'] = "Grado: " + self.modelController.obtenerGrado().__str__()
