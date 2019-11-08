@@ -211,9 +211,9 @@ class VistaPolinomio(tk.Frame):
         self.modelController = MetodoController()
         self.modelController.cargar(padre.getDominios(), padre.getImagenes(), padre.metodoElegido)
 
-
         self.lPolinomio['text'] = self.modelController.obtenerPolinomio()
         self.lGrado['text'] = "Grado: " + self.modelController.obtenerGrado().__str__()
+        self.lEspaciado['text'] = "Equiespaciado: " + self.modelController.esEquiespaciado()
 
         self.cargarPasos()
 
