@@ -25,8 +25,8 @@ class MetodoFINTER:
         pass
     def obtenerValorPara(self,K):
         polinomio = self.obtenerPolinomioInterpolante()
-        print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
-        return polinomio.subs(x,K) #Para el test.Se puede sacar
+        print ("La imagen aproximada en",K," es: ",polinomio.as_poly().eval(K))
+        return polinomio.as_poly().eval(K) #Para el test.Se puede sacar
 
 class NewtonGregoryProgresivo(MetodoFINTER):
     def obtenerPolinomioInterpolante(self):

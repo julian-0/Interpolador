@@ -251,7 +251,7 @@ class VistaPolinomio(tk.Frame):
     def calcularImagen(self, punto):
         self.mensajePunto['text'] = ""
 
-        if self.punto.get().isdigit():
+        if self.punto.get().replace('.', '', 1).isdigit():
             self.lImagen['text'] = self.modelController.obtenerImagen(punto)
         else:
             self.mensajePunto['text'] = "Ingrese un valor numerico"
