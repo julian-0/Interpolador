@@ -6,8 +6,6 @@ x, y, z, t = symbols('x y z t')
 
 
 class MetodoFINTER:
-    dominio = [5, 10, 20, 30]
-    imagen = [1.519, 1.307, 1.002, 0.796]
 
     def printear(self):
         print(self.dominio)
@@ -43,7 +41,6 @@ class NewtonGregoryProgresivo(MetodoFINTER):
         polNewton = matrizN[0][0]
 
         for i in range(1, len(matrizN[0])):
-            # print("saco de la matriz: ",matrizN[0][i])
             polNewton += matrizN[0][i] * self.gradoX(i)
         return polNewton
 
@@ -61,19 +58,20 @@ class NewtonGregoryProgresivo(MetodoFINTER):
         pasos = []
         paso1 = "Paso 1: Calculo de las diferencias finitas:\n"
         pasos.append(paso1)
+
         # Mostrar cada diferencia(Xi)
         diferencias = obtenerPasosCalculo(self.imagen, self.dominio)
         for i in range(len(diferencias)):
             print(diferencias[i])
             pasos.append(diferencias[i])
+
         pasos.append("Obteniendose la siguiente matriz: \n")
         matrizN = obtenerMatriz(self.imagen, self.dominio)
         for i in range(len(self.dominio)):
             print(matrizN[i])
             pasos.append(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
-        # print("Polinomio de grado ",degree(polinomio)," obtenido: ")
-        # print(polinomio.as_poly())
+
         pasos.append("Paso 2: Reemplazamos en la formula: \n")
         cadena = ""
         for i in range(1, len(matrizN[0])):
@@ -90,7 +88,6 @@ class NewtonGregoryRegresivo(MetodoFINTER):
         polNewton = matrizN[len(self.imagen) - 1][0]
 
         for i in range(1, len(matrizN[0])):
-            #   print("saco de la matriz: ",matrizN[len(self.imagen)-1-i][i])
             polNewton += matrizN[len(self.imagen) - 1 - i][i] * self.gradoX(i)
 
         return polNewton
@@ -113,20 +110,16 @@ class NewtonGregoryRegresivo(MetodoFINTER):
         # Mostrar cada diferencia(Xi)
         diferencias = obtenerPasosCalculo(self.imagen, self.dominio)
         for i in range(len(diferencias)):
-            #    print(diferencias[i])
             pasos.append(diferencias[i])
         pasos.append("Obteniendose la siguiente matriz: \n")
         matrizN = obtenerMatriz(self.imagen, self.dominio)
         for i in range(len(self.dominio)):
-            #    print(matrizN[i])
             pasos.append(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
-        # print("Polinomio de grado ",degree(polinomio)," obtenido: ")
-        # print(polinomio.as_poly())
+
         pasos.append("Paso 2: Reemplazamos en la formula: \n")
         cadena = ""
         for i in range(1, len(matrizN[0])):
-            #    print("a: ",matrizN[len(self.imagen)-1-i][i])
             cadena += "a" + str(i - 1) + "= " + str(matrizN[len(self.imagen) - 1 - i][i])
         pasos.append(cadena)
         pasos.append(str(polinomio))
@@ -138,7 +131,6 @@ class Lagrange(MetodoFINTER):
         auxDominio = self.dominio[:]
         auxImagen = self.imagen[:]
         auxDominio.pop(nroDeL)
-        # auxImagen.pop(nroDeL)
         e = 1
         f = 1
         for i in range(len(auxDominio)):
@@ -171,24 +163,3 @@ class Lagrange(MetodoFINTER):
         pasos.append(str(polinomio))
         return pasos
 
-
-algo = Lagrange()
-algo.setDominio([1, 2])
-algo.setImagen([1, 4])
-foo = algo.obtenerValorPara(2)
-print(foo)
-"""
-
-
-algo.mostrarPasos()
-print("-----")
-#algo = NewtonGregoryRegresivo()
-algo.setDominio([0,2,3,5,6])
-algo.setImagen([0,8,27,125,216])
-esto = algo.mostrarPasos()
-for i in range (len(esto)):
-    print(esto[i])
-
-e = 1.0+(x-1.0)+3.0*(x-1.0)*(x-3.0)+1.0*(x-1.0)*(x-3.0)*(x-4.0)
-e2 = 151.0+57*(x-7)+11*(x-7)*(x-5)+1*(x-7)*(x-5)*(x-4)
-"""
