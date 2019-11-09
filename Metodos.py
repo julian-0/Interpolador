@@ -78,7 +78,7 @@ class NewtonGregoryProgresivo(MetodoFINTER):
             print("a: ", str(matrizN[0][i]))
             cadena += "a" + str(i - 1) + "= " + str(matrizN[0][i])
         pasos.append(cadena)
-        pasos.append(str(polinomio.as_poly))
+        pasos.append(str(polinomio))
         return pasos
 
 
@@ -162,4 +162,3 @@ class Lagrange(MetodoFINTER):
         pasos.append("Paso 2: Reemplazamos en la formula: ")
         pasos.append(str(polinomio))
         return pasos
-
