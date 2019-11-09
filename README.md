@@ -2,9 +2,15 @@
 
 ##Trabajo practico de la materia "Matematica Superior". UTN FRBA
 
-Lenguaje utilizado:
+Lenguaje utilizado: Python 3.X
 
-Python 3.X
+| Alumno  | Legajo |
+| ------------- | ------------- |
+| Francisco Cortez | 1638130  |
+| Manuel Torres  | 1606888  |
+| Julian Ordóñez  | 1602974  |
+| Gonzalo Ortega  | 1636595  |
+| Tianshu Wang  | 1631093  |
 
 Librerias usadas:
 

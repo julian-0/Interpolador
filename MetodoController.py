@@ -5,9 +5,8 @@ x = symbols('x')
 
 
 class MetodoController():
-    # TODO agregar las otras clases
     clases = {"Lagrange": Lagrange(), "Newton Gregory progresivo": NewtonGregoryProgresivo(),
-              "Newton Gregory regresivo": int}
+              "Newton Gregory regresivo": NewtonGregoryRegresivo()}
 
     def cargar(self, dominio, imagenes, metodoPol):
         self.metodo = self.clases[metodoPol]
