@@ -148,6 +148,8 @@ class VistaInicial(tk.Frame):
 class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
+        self.polinomioAnterior = None
+
         tk.Frame.__init__(self, padre)
         Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=10, font=FONT_TITULO).pack()
         self.config(bg=COLOR_PRINCIPAL)
@@ -204,6 +206,9 @@ class VistaPolinomio(tk.Frame):
                             command=controlador.destroy)
         self.boton.grid(row=0, column=1)
 
+        self.lCambio = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lCambio.pack()
+
     def cargarResultados(self, padre):
         self.padre = padre
         self.lMetodo['text'] = "Metodo: " + padre.metodoElegido
@@ -212,10 +217,20 @@ class VistaPolinomio(tk.Frame):
         self.modelController.cargar(padre.getDominios(), padre.getImagenes(), padre.metodoElegido)
 
         self.lPolinomio['text'] = self.modelController.obtenerPolinomio()
+        if self.polinomioAnterior is not None:
+            if self.cambioPolinomio():
+                self.lCambio['text'] = "Cambio: Si"
+            else:
+                self.lCambio['text'] = "Cambio: No"
+        self.polinomioAnterior = self.lPolinomio['text']
+
         self.lGrado['text'] = "Grado: " + self.modelController.obtenerGrado().__str__()
         self.lEspaciado['text'] = "Equiespaciado: " + self.modelController.esEquiespaciado()
 
         self.cargarPasos()
+
+    def cambioPolinomio(self):
+        return self.lPolinomio['text'] != self.polinomioAnterior
 
     def cargarPasos(self):
         pasos = self.modelController.obtenerPasos()
