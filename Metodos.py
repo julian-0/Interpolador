@@ -119,7 +119,7 @@ class NewtonGregoryRegresivo(MetodoFINTER):
         #    print("a: ",matrizN[len(self.imagen)-1-i][i])
             cadena += "a"+str(i-1)+"= "+str(matrizN[len(self.imagen)-1-i][i])
         pasos.append(cadena)
-        pasos.append(str(polinomio.as_poly) )
+        pasos.append(str(polinomio))
         return pasos
 
 
@@ -158,7 +158,7 @@ class Lagrange(MetodoFINTER):
         print("Polinomio de grado ",degree(polinomio)," obtenido: ")
         print(polinomio.as_poly())
         pasos.append("Paso 2: Reemplazamos en la formula: ")
-        pasos.append(str(polinomio.as_poly) )
+        pasos.append(str(polinomio.as_poly()) )
         return pasos
 
 
