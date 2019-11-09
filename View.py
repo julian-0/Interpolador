@@ -184,7 +184,7 @@ class VistaPolinomio(tk.Frame):
         Label(self.framePunto, text="Punto: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=0, column=0)
         self.punto = Entry(self.framePunto)
         self.punto.grid(row=0, column=1, padx=5)
-        self.boton = Button(self.framePunto, text="Calcular", bg="springGreen2", activebackground="springGreen3", command= lambda:self.calcularImagen(self.punto.get()))
+        self.boton = Button(self.framePunto, text="Calcular", bd=1, bg="springGreen2", activebackground="springGreen3", command= lambda:self.calcularImagen(self.punto.get()))
         self.boton.grid(row=0, column=2)
         self.lImagen = Label(self.framePunto, text="Imagen: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         self.lImagen.grid(row=1, column=0)
@@ -198,11 +198,11 @@ class VistaPolinomio(tk.Frame):
         self.frameBotones = Frame(self, bg=COLOR_PRINCIPAL)
         self.frameBotones.pack()
 
-        self.boton = Button(self.frameBotones, text="Alterar valores",bg="firebrick2", activebackground="firebrick3",
+        self.boton = Button(self.frameBotones, text="Alterar valores", bd=1, bg="firebrick2", activebackground="firebrick3",
                             command=lambda: controlador.mostrarFrame(VistaInicial))
         self.boton.grid(row=0, column=0, padx=10)
 
-        self.boton = Button(self.frameBotones, text="Finalizar", bg="firebrick2", activebackground="firebrick3",
+        self.boton = Button(self.frameBotones, text="Finalizar", bd=1, bg="firebrick2", activebackground="firebrick3",
                             command=controlador.destroy)
         self.boton.grid(row=0, column=1)
 
