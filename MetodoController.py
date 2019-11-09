@@ -5,7 +5,6 @@ x = symbols('x')
 
 
 class MetodoController():
-    # TODO agregar las otras clases
     clases = {"Lagrange": Lagrange(), "Newton Gregory progresivo": NewtonGregoryProgresivo(),
               "Newton Gregory regresivo": NewtonGregoryRegresivo()}
 

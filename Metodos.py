@@ -25,7 +25,7 @@ class MetodoFINTER:
         pass
     def obtenerValorPara(self,K):
         polinomio = self.obtenerPolinomioInterpolante()
-        print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
+        #print ("La imagen aproximada en",K," es: ",polinomio.subs(x, K))
         return polinomio.subs(x,K) #Para el test.Se puede sacar
 
 class NewtonGregoryProgresivo(MetodoFINTER):
@@ -64,8 +64,8 @@ class NewtonGregoryProgresivo(MetodoFINTER):
             print(matrizN[i])
             pasos.append(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
-#        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
-#        print(polinomio.as_poly())
+        #print("Polinomio de grado ",degree(polinomio)," obtenido: ")
+        #print(polinomio.as_poly())
         pasos.append("Paso 2: Reemplazamos en la formula: \n")
         cadena = ""
         for i in range (1,len(matrizN[0])):
@@ -111,8 +111,8 @@ class NewtonGregoryRegresivo(MetodoFINTER):
         #    print(matrizN[i])
             pasos.append(matrizN[i])
         polinomio = self.obtenerPolinomioInterpolante()
-#        print("Polinomio de grado ",degree(polinomio)," obtenido: ")
-#        print(polinomio.as_poly())
+        #print("Polinomio de grado ",degree(polinomio)," obtenido: ")
+        #print(polinomio.as_poly())
         pasos.append("Paso 2: Reemplazamos en la formula: \n")
         cadena = ""
         for i in range (1,len(matrizN[0])):
@@ -158,15 +158,18 @@ class Lagrange(MetodoFINTER):
         print("Polinomio de grado ",degree(polinomio)," obtenido: ")
         print(polinomio.as_poly())
         pasos.append("Paso 2: Reemplazamos en la formula: ")
-        pasos.append(str(polinomio.as_poly()) )
+        pasos.append(str(polinomio))
         return pasos
 
 
-
+algo = Lagrange()
+algo.setDominio([1,2])
+algo.setImagen([1,4])
+foo = algo.obtenerValorPara(2)
+print(foo)
 """
-algo = NewtonGregoryProgresivo()
-algo.setDominio([0,2,3,5,6])
-algo.setImagen([0,8,27,125,216])
+
+
 algo.mostrarPasos()
 print("-----")
 #algo = NewtonGregoryRegresivo()
