@@ -1,5 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
+
 from MetodoController import *
 
 COLOR_PRINCIPAL = "dodger blue"
@@ -17,7 +18,7 @@ class AppFinter(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title("Finter")
-        self.resizable(1, 1)
+        self.resizable(width=False, height=False)
         self.config(bg="light green")
 
         self.container = Frame()
@@ -36,8 +37,10 @@ class AppFinter(Tk):
         self.mostrarFrame(VistaInicial)
 
     def mostrarFrame(self, vista):
+        for frame in self.frames.values():
+            frame.grid_remove()
         frame = self.frames[vista]
-        frame.tkraise()
+        frame.grid()
 
 
 class VistaInicial(tk.Frame):
@@ -48,11 +51,11 @@ class VistaInicial(tk.Frame):
         self.controlador = controller
         self.config(bg=COLOR_PRINCIPAL)
 
-        Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).grid(row=1, column=0)
+        Label(self, text="Bienvenido!", bg=COLOR_PRINCIPAL, font=FONT_TITULO).pack()
 
         # Frame Container
         frame = LabelFrame(self, text='Ingrese puntos:', font=FONT_PRINCIPAL_1)
-        frame.grid(row=2, column=0)
+        frame.pack()
         frame.config(bg=COLOR_SECUNDARIO, bd=0)
 
         # Ordenada Input
@@ -76,19 +79,19 @@ class VistaInicial(tk.Frame):
 
         # Tabla
         self.tabla = ttk.Treeview(self, height=10, columns=2)
-        self.tabla.grid(row=7, column=0, pady=5)
+        self.tabla.pack()
         self.tabla.heading('#0', text='Dominio', anchor=tk.CENTER)
         self.tabla.heading('#1', text='Imagen', anchor=tk.CENTER)
 
         # Eliminar punto seleccionado
         botonEliminar = Button(self, text="Eliminar punto", bg="firebrick2", bd=1, activebackground="firebrick3",
                                command=lambda: self.eliminarPunto())
-        botonEliminar.grid(row=8, column=0, pady=5)
+        botonEliminar.pack()
 
         # Seleccion de metodo
         frameMetodo = LabelFrame(self, text='Seleccione un metodo:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         frameMetodo.config(bg=COLOR_SECUNDARIO, bd=0)
-        frameMetodo.grid(row=9, column=0, pady=5)
+        frameMetodo.pack()
         self.combo = ttk.Combobox(frameMetodo, state="readonly", width=24, font=FONT_PRINCIPAL)
         self.combo.pack()
         self.combo["values"] = ["Lagrange", "Newton Gregory progresivo", "Newton Gregory regresivo"]
@@ -97,7 +100,7 @@ class VistaInicial(tk.Frame):
         # Boton calcular
         botonCalcular = Button(self, text="Calcular", bg="springGreen2", bd=1, activebackground="springGreen3",
                                command=lambda: self.calcularPolinomio())
-        botonCalcular.grid(row=10, column=0)
+        botonCalcular.pack()
 
     def validar(self):
         if not self.completos():
@@ -183,6 +186,7 @@ class VistaPolinomio(tk.Frame):
         # Frame pasos
         self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePasos.pack()
+        self.labelsPasos = []
 
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
@@ -242,11 +246,18 @@ class VistaPolinomio(tk.Frame):
     def cambioPolinomio(self):
         return self.lPolinomio['text'] != self.polinomioAnterior
 
-    def cargarPasos(self):
-        pasos = self.modelController.obtenerPasos()
+    def limpiarPasos(self):
+        for paso in self.labelsPasos:
+            paso.destroy()
 
+    def cargarPasos(self):
+        self.limpiarPasos()
+
+        pasos = self.modelController.obtenerPasos()
         for i, p in enumerate(pasos):
-            Label(self.framePasos, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=i, column=0)
+            paso = Label(self.framePasos, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+            paso.pack()
+            self.labelsPasos.append(paso)
 
     def calcularImagen(self, punto):
         self.mensajePunto['text'] = ""
