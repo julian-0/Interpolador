@@ -11,6 +11,7 @@ FONT_PRINCIPAL_1 = ("Arial", 12)
 FONT_PRINCIPAL_SUB = ("Arial", 12, "underline")
 FONT_PRINCIPAL_BOLD = ("Arial", 11, "bold")
 
+
 class AppFinter(Tk):
 
     def __init__(self):
@@ -65,7 +66,8 @@ class VistaInicial(tk.Frame):
         self.imagen.grid(row=4, column=1)
 
         # Boton agregar
-        boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="springGreen2", bd=1, activebackground="springGreen3")
+        boton = Button(frame, text="Agregar", command=self.agregarPunto, bg="springGreen2", bd=1,
+                       activebackground="springGreen3")
         boton.grid(row=5, column=0, columnspan=2, pady=5)
 
         # Mensaje resultado
@@ -134,17 +136,23 @@ class VistaInicial(tk.Frame):
         self.dominio.delete(0, 'end')
         self.imagen.delete(0, 'end')
 
-
     def calcularPolinomio(self):
-        self.metodoElegido = self.combo.get()
-        frame = self.controlador.frames[VistaPolinomio]
-        frame.cargarResultados(self)
-        self.controlador.mostrarFrame(VistaPolinomio)
+        if self.hayMasDeUnPunto():
+            self.metodoElegido = self.combo.get()
+            frame = self.controlador.frames[VistaPolinomio]
+            frame.cargarResultados(self)
+            self.controlador.mostrarFrame(VistaPolinomio)
+        else:
+            self.mensaje['text'] = "Debe haber al menos dos puntos"
+
+    def hayMasDeUnPunto(self):
+        return len(self.tabla.get_children()) > 1
 
     def eliminarPunto(self):
         selected_item = self.tabla.selection()[0]
         self.tabla.delete(selected_item)
-        
+
+
 class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
@@ -154,7 +162,7 @@ class VistaPolinomio(tk.Frame):
         Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=10, font=FONT_TITULO).pack()
         self.config(bg=COLOR_PRINCIPAL)
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
+        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         self.lPolinomio = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lPolinomio.pack()
@@ -170,35 +178,37 @@ class VistaPolinomio(tk.Frame):
         self.lEspaciado = Label(self.frameDatos, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lEspaciado.grid(row=2, column=0)
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
+        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame pasos
         self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePasos.pack()
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
+        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame calcular en punto
-        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
+        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0,
+                                     font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePunto.pack()
         Label(self.framePunto, text="Punto: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=0, column=0)
         self.punto = Entry(self.framePunto)
         self.punto.grid(row=0, column=1, padx=5)
-        self.boton = Button(self.framePunto, text="Calcular", bd=1, bg="springGreen2", activebackground="springGreen3", command= lambda:self.calcularImagen(self.punto.get()))
+        self.boton = Button(self.framePunto, text="Calcular", bd=1, bg="springGreen2", activebackground="springGreen3",
+                            command=lambda: self.calcularImagen(self.punto.get()))
         self.boton.grid(row=0, column=2)
         self.lImagen = Label(self.framePunto, text="Imagen: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
         self.lImagen.grid(row=1, column=0)
         self.mensajePunto = Label(self.framePunto, text="", bg=COLOR_SECUNDARIO, fg=COLOR_ERROR)
-        self.mensajePunto.grid(row=2, column=0, columnspan=3) # Espacio, se me bugueo el grid
+        self.mensajePunto.grid(row=2, column=0, columnspan=3)  # Espacio, se me bugueo el grid
 
-
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack() # Espacio, se me bugueo el grid
+        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame botones
         self.frameBotones = Frame(self, bg=COLOR_PRINCIPAL)
         self.frameBotones.pack()
 
-        self.boton = Button(self.frameBotones, text="Alterar valores", bd=1, bg="firebrick2", activebackground="firebrick3",
+        self.boton = Button(self.frameBotones, text="Alterar valores", bd=1, bg="firebrick2",
+                            activebackground="firebrick3",
                             command=lambda: controlador.mostrarFrame(VistaInicial))
         self.boton.grid(row=0, column=0, padx=10)
 
@@ -245,7 +255,6 @@ class VistaPolinomio(tk.Frame):
             self.lImagen['text'] = self.modelController.obtenerImagen(punto)
         else:
             self.mensajePunto['text'] = "Ingrese un valor numerico"
-
 
 
 if __name__ == '__main__':
