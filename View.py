@@ -20,7 +20,6 @@ class AppFinter(Tk):
         self.title("Finter")
         self.resizable(width=False, height=False)
         self.config(bg="light green")
-        #self.geometry("475x570")
 
         self.container = Frame()
         self.container.pack(side="top", fill="both", expand=True)
@@ -161,18 +160,24 @@ class VistaPolinomio(tk.Frame):
 
     def __init__(self, padre, controlador):
         self.polinomioAnterior = None
+        self.controlador = controlador
 
         tk.Frame.__init__(self, padre)
+        self.vista = self.configurarVista()
 
-        self.scrollPrincipal = VerticalScrolledFrame(self)
+
+    def configurarVista(self):
+        self.scrollPrincipal = VerticalScrolledFrame(parent=self, alto=480)
         self.scrollPrincipal.pack()
         self.scrollPrincipal.config(bg=COLOR_PRINCIPAL)
         self.scrollPrincipal.interior.config(bg=COLOR_PRINCIPAL)
-        
-        Label(self.scrollPrincipal.interior, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=5, font=FONT_TITULO).pack()
+
+        Label(self.scrollPrincipal.interior, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=5,
+              font=FONT_TITULO).pack()
         self.config(bg=COLOR_PRINCIPAL)
 
-        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
+              font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         self.lPolinomio = Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lPolinomio.pack()
@@ -188,20 +193,24 @@ class VistaPolinomio(tk.Frame):
         self.lEspaciado = Label(self.frameDatos, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lEspaciado.grid(row=2, column=0)
 
-        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
+              font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame pasos
-        self.framePasos = LabelFrame(self.scrollPrincipal.interior, text='Pasos:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL_BOLD)
+        self.framePasos = LabelFrame(self.scrollPrincipal.interior, text='Pasos:', bg=COLOR_SECUNDARIO,
+                                     font=FONT_PRINCIPAL_BOLD)
         self.framePasos.pack()
         self.labelsPasos = []
-        self.scroll = VerticalScrolledFrame(self.framePasos)
+        self.scroll = VerticalScrolledFrame(parent=self.framePasos, alto=200)
         self.scroll.pack()
         self.scroll.interior.config(bg=COLOR_SECUNDARIO)
 
-        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
+              font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame calcular en punto
-        self.framePunto = LabelFrame(self.scrollPrincipal.interior, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0,
+        self.framePunto = LabelFrame(self.scrollPrincipal.interior, text='Especializar en valor', bg=COLOR_SECUNDARIO,
+                                     bd=0,
                                      font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePunto.pack()
         Label(self.framePunto, text="Punto: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=0, column=0)
@@ -215,7 +224,8 @@ class VistaPolinomio(tk.Frame):
         self.mensajePunto = Label(self.framePunto, text="", bg=COLOR_SECUNDARIO, fg=COLOR_ERROR)
         self.mensajePunto.grid(row=2, column=0, columnspan=3)  # Espacio, se me bugueo el grid
 
-        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
+              font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame botones
         self.frameBotones = Frame(self.scrollPrincipal.interior, bg=COLOR_PRINCIPAL)
@@ -223,17 +233,21 @@ class VistaPolinomio(tk.Frame):
 
         self.boton = Button(self.frameBotones, text="Alterar valores", bd=1, bg="firebrick2",
                             activebackground="firebrick3",
-                            command=lambda: controlador.mostrarFrame(VistaInicial))
+                            command=lambda: self.controlador.mostrarFrame(VistaInicial))
         self.boton.grid(row=0, column=0, padx=10)
 
         self.boton = Button(self.frameBotones, text="Finalizar", bd=1, bg="firebrick2", activebackground="firebrick3",
-                            command=controlador.destroy)
+                            command=self.controlador.destroy)
         self.boton.grid(row=0, column=1)
 
         self.lCambio = Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lCambio.pack()
+        return self.scrollPrincipal
 
     def cargarResultados(self, padre):
+        self.vista.destroy()
+        self.vista = self.configurarVista()
+
         self.padre = padre
         self.lMetodo['text'] = "Metodo: " + padre.metodoElegido
 

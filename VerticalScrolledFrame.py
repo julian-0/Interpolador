@@ -4,12 +4,12 @@ COLOR_SECUNDARIO = "sky blue"
 
 class VerticalScrolledFrame(Frame):
 
-    def __init__(self, parent, *args, **kw):
+    def __init__(self, alto, parent, *args, **kw):
         Frame.__init__(self, parent, *args, **kw)
         vscrollbar = Scrollbar(self, orient=VERTICAL)
         vscrollbar.pack(fill=Y, side=RIGHT, expand=FALSE)
         canvas = Canvas(self, bd=0,
-                        yscrollcommand=vscrollbar.set)
+                        yscrollcommand=vscrollbar.set, height=alto)
         canvas.pack(side=LEFT, fill=BOTH, expand=TRUE)
         vscrollbar.config(command=canvas.yview)
         canvas.config(bg=COLOR_SECUNDARIO)
