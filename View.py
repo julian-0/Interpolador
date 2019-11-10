@@ -115,7 +115,7 @@ class VistaInicial(tk.Frame):
         return len(self.dominio.get()) != 0 and len(self.imagen.get()) != 0
 
     def numericos(self):
-        return self.dominio.get().replace('.', '', 1).isdigit() and self.imagen.get().replace('.', '', 1).isdigit()
+        return esDigito(self.dominio.get()) and esDigito(self.imagen.get())
 
     def agregarPunto(self):
         self.mensaje['text'] = ''
@@ -265,10 +265,14 @@ class VistaPolinomio(tk.Frame):
     def calcularImagen(self, punto):
         self.mensajePunto['text'] = ""
 
-        if self.punto.get().replace('.', '', 1).isdigit():
+        if esDigito(self.punto.get()):
             self.lImagen['text'] = self.modelController.obtenerImagen(punto)
         else:
             self.mensajePunto['text'] = "Ingrese un valor numerico"
+
+
+def esDigito(expresion):
+    return expresion.replace('.', '', 1).replace('-', '', 1).isdigit()
 
 
 if __name__ == '__main__':
