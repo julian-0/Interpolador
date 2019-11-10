@@ -1,6 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
-
+from VerticalScrolledFrame import *
 from MetodoController import *
 
 COLOR_PRINCIPAL = "dodger blue"
@@ -184,9 +184,12 @@ class VistaPolinomio(tk.Frame):
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame pasos
-        self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, bd=0, font=FONT_PRINCIPAL_BOLD, padx=5)
+        self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL_BOLD)
         self.framePasos.pack()
         self.labelsPasos = []
+        self.scroll = VerticalScrolledFrame(self.framePasos)
+        self.scroll.pack()
+        self.scroll.interior.config(bg=COLOR_SECUNDARIO)
 
         Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
@@ -255,7 +258,7 @@ class VistaPolinomio(tk.Frame):
 
         pasos = self.modelController.obtenerPasos()
         for i, p in enumerate(pasos):
-            paso = Label(self.framePasos, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+            paso = Label(self.scroll.interior, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
             paso.pack()
             self.labelsPasos.append(paso)
 
