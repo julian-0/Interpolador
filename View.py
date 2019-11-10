@@ -162,16 +162,22 @@ class VistaPolinomio(tk.Frame):
         self.polinomioAnterior = None
 
         tk.Frame.__init__(self, padre)
-        Label(self, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=10, font=FONT_TITULO).pack()
+
+        self.scrollPrincipal = VerticalScrolledFrame(self)
+        self.scrollPrincipal.pack()
+        self.scrollPrincipal.config(bg=COLOR_PRINCIPAL)
+        self.scrollPrincipal.interior.config(bg=COLOR_SECUNDARIO)
+        
+        Label(self.scrollPrincipal, text="Polinomio interpolante", bg=COLOR_PRINCIPAL, pady=10, font=FONT_TITULO).pack()
         self.config(bg=COLOR_PRINCIPAL)
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
-        self.lPolinomio = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lPolinomio = Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lPolinomio.pack()
 
         # Frame datos
-        self.frameDatos = Frame(self, bg=COLOR_PRINCIPAL)
+        self.frameDatos = Frame(self.scrollPrincipal, bg=COLOR_PRINCIPAL)
         self.frameDatos.pack()
 
         self.lMetodo = Label(self.frameDatos, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
@@ -181,20 +187,20 @@ class VistaPolinomio(tk.Frame):
         self.lEspaciado = Label(self.frameDatos, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lEspaciado.grid(row=2, column=0)
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame pasos
-        self.framePasos = LabelFrame(self, text='Pasos:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL_BOLD)
+        self.framePasos = LabelFrame(self.scrollPrincipal, text='Pasos:', bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL_BOLD)
         self.framePasos.pack()
         self.labelsPasos = []
         self.scroll = VerticalScrolledFrame(self.framePasos)
         self.scroll.pack()
         self.scroll.interior.config(bg=COLOR_SECUNDARIO)
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame calcular en punto
-        self.framePunto = LabelFrame(self, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0,
+        self.framePunto = LabelFrame(self.scrollPrincipal, text='Especializar en valor', bg=COLOR_SECUNDARIO, bd=0,
                                      font=FONT_PRINCIPAL_BOLD, padx=5)
         self.framePunto.pack()
         Label(self.framePunto, text="Punto: ", bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL).grid(row=0, column=0)
@@ -208,10 +214,10 @@ class VistaPolinomio(tk.Frame):
         self.mensajePunto = Label(self.framePunto, text="", bg=COLOR_SECUNDARIO, fg=COLOR_ERROR)
         self.mensajePunto.grid(row=2, column=0, columnspan=3)  # Espacio, se me bugueo el grid
 
-        Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+        Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
         # Frame botones
-        self.frameBotones = Frame(self, bg=COLOR_PRINCIPAL)
+        self.frameBotones = Frame(self.scrollPrincipal, bg=COLOR_PRINCIPAL)
         self.frameBotones.pack()
 
         self.boton = Button(self.frameBotones, text="Alterar valores", bd=1, bg="firebrick2",
@@ -223,7 +229,7 @@ class VistaPolinomio(tk.Frame):
                             command=controlador.destroy)
         self.boton.grid(row=0, column=1)
 
-        self.lCambio = Label(self, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
+        self.lCambio = Label(self.scrollPrincipal, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
         self.lCambio.pack()
 
     def cargarResultados(self, padre):
