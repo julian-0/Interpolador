@@ -179,8 +179,8 @@ class VistaPolinomio(tk.Frame):
         Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
               font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
 
-        self.lPolinomio = Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL)
-        self.lPolinomio.pack()
+        self.lPolinomio = Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL, font=FONT_PRINCIPAL,  wraplength=800)
+        self.lPolinomio.pack() #modifique arriba
 
         # Frame datos
         self.frameDatos = Frame(self.scrollPrincipal.interior, bg=COLOR_PRINCIPAL)
@@ -206,7 +206,7 @@ class VistaPolinomio(tk.Frame):
         self.scroll.interior.config(bg=COLOR_SECUNDARIO)
 
         Label(self.scrollPrincipal.interior, text="", bg=COLOR_PRINCIPAL,
-              font=FONT_PRINCIPAL).pack()  # Espacio, se me bugueo el grid
+              font=FONT_PRINCIPAL, wraplength=800).pack()  # Espacio, se me bugueo el grid
 
         # Frame calcular en punto
         self.framePunto = LabelFrame(self.scrollPrincipal.interior, text='Especializar en valor', bg=COLOR_SECUNDARIO,
@@ -279,7 +279,7 @@ class VistaPolinomio(tk.Frame):
 
         pasos = self.modelController.obtenerPasos()
         for i, p in enumerate(pasos):
-            paso = Label(self.scroll.interior, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL)
+            paso = Label(self.scroll.interior, text=p, bg=COLOR_SECUNDARIO, font=FONT_PRINCIPAL, wraplength=800)
             paso.pack()
             self.labelsPasos.append(paso)
 
