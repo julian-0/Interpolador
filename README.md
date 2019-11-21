@@ -2,6 +2,14 @@
 
 _Trabajo practico de la materia "Matematica Superior". UTN FRBA_
 
+## Como usar
+ Ejecutar Finter.exe
+ 
+## Documentacion
+Manual de Usuario - TP - MateSup.docx	
+
+## Sobre el desarrollo
+
 Lenguaje utilizado: **Python 3.X**
 
 Librerias usadas:
