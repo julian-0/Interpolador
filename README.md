@@ -2,6 +2,8 @@
 
 [Spanish Readme](https://github.com/julian-0/Interpolador/blob/master/README_ES.md)
 
+![Finter gui example](https://github.com/julian-0/Interpolador/blob/master/finter.png)
+
 _Practical work on the subject "Higher Mathematics". UTN FRBA_
 
 ## What is Finter?
