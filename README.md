@@ -1,32 +1,36 @@
 # FINTER
 
-_Trabajo practico de la materia "Matematica Superior". UTN FRBA_
+[Spanish Readme](https://github.com/julian-0/Interpolador/blob/master/README_ES.md)
 
-## Que es?
-Finter es un programa que permite obtener el polinomio interpolante mediante dos metodos para los puntos que se ingresen
+_Practical work on the subject "Higher Mathematics". UTN FRBA_
 
-Metodos
+## What is Finter?
+Finter is a program that allows obtaining the interpolating polynomial by two methods for the points that are entered.
+
+After obtaining the polynomial, is possible to know the value of the function at some desired point.
+
+__Methods__
 * Lagrange
 * Newton Gregory
-  * Progresivo
-  * Regresivo
+  * Progressive
+  * Regressive
 
-## Como usar
- Ejecutar Finter.exe
+## How to use it
+ Execute Finter.exe
  
-## Documentacion
+## Documentation
 Manual de Usuario - TP - MateSup.docx	
 
-## Sobre el desarrollo
+## About de development
 
-Lenguaje utilizado: **Python 3.X**
+Used language: **Python 3.X**
 
-Librerias usadas:
+Used librarys:
 * Sympy
 * Tkinter
 
-### Comentarios
--Antes de instalar Sympy instale mpmath
+### Comments
+-Before installing Sympy install mpmath
 ```
 sudo apt-get install python-mpmath
 ```
@@ -39,9 +43,9 @@ sudo apt install python3-sympy
 sudo apt-get install python3-tk
 ```
 
-Mas info: http://pyciencia.blogspot.com/2016/12/sympy.html
+More info: http://pyciencia.blogspot.com/2016/12/sympy.html
 
-| Alumnos  |
+| Students  |
 | -------------|
 | Francisco Cortez|
 | Manuel Torres|
@@ -49,4 +53,4 @@ Mas info: http://pyciencia.blogspot.com/2016/12/sympy.html
 | Gonzalo Ortega|
 | Tianshu Wang|
 
-Nota: 10
+Grade: 10
