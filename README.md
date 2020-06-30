@@ -1,6 +1,15 @@
-# 2C2019TPMS
+# FINTER
 
 _Trabajo practico de la materia "Matematica Superior". UTN FRBA_
+
+## Que es?
+Finter es un programa que permite obtener el polinomio interpolante mediante dos metodos para los puntos que se ingresen
+
+Metodos
+* Lagrange
+* Newton Gregory
+  * Progresivo
+  * Regresivo
 
 ## Como usar
  Ejecutar Finter.exe
@@ -13,7 +22,10 @@ Manual de Usuario - TP - MateSup.docx
 Lenguaje utilizado: **Python 3.X**
 
 Librerias usadas:
+* Sympy
+* Tkinter
 
+### Comentarios
 -Antes de instalar Sympy instale mpmath
 ```
 sudo apt-get install python-mpmath
